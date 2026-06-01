@@ -22,6 +22,71 @@ This project is not produced, endorsed, reviewed, or approved by the Quranic Ara
 
 Prebuilt cache archives are not included in this repository. This project provides tooling for users to build a local cache from the official Quranic Arabic Corpus website for personal offline study. Redistribution of cached website pages, translations, images, or other third-party content may require additional permission from the relevant rights holders. This repository does not grant rights to redistribute third-party content.
 
+## Download and run
+
+1. Get the code:
+
+   - Click **Code** -> **Download ZIP** on GitHub, then extract the folder.
+   - Or clone the repository:
+
+     ```bash
+     git clone https://github.com/TheHanifaWarner/quran-corpus-offline.git
+     cd quran-corpus-offline
+     ```
+
+2. Install Python requirements:
+
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+3. Download `quranic-corpus-morphology-0.4.txt` from the official Corpus download page:
+   <https://corpus.quran.com/download/>
+
+4. Place the morphology file at:
+
+   ```text
+   data/quranic-corpus-morphology-0.4.txt
+   ```
+
+5. Estimate before building. These commands do not download pages:
+
+   ```bash
+   python -m quran_offline.cache_corpus_pages --profile core --estimate
+   python -m quran_offline.cache_corpus_pages --profile full --estimate
+   ```
+
+6. Build the local data/cache you want:
+
+   ```bash
+   python -m quran_offline.cache_corpus_pages --profile db-only
+   python -m quran_offline.cache_corpus_pages --profile core
+   python -m quran_offline.cache_corpus_pages --profile morphology
+   python -m quran_offline.cache_corpus_pages --profile full
+   ```
+
+   Start with `db-only` or `core` unless you specifically want a broader cache. The builder is resumable: if a build is interrupted, re-run the same command and existing files will be skipped.
+
+7. Verify the local build:
+
+   ```bash
+   python -m quran_offline.audit_offline_archive --verify core
+   ```
+
+8. Start the local server:
+
+   ```bash
+   python -m quran_offline.server
+   ```
+
+9. Open:
+
+   ```text
+   http://127.0.0.1:8765/
+   ```
+
+On Windows, `Run Offline Corpus.bat` starts the local server after Python is installed. The prebuilt full cache is not included; each user builds local cache output on their own machine.
+
 ## Attribution
 
 Credit for the Quranic Arabic Corpus belongs to the original project and contributors:
@@ -39,37 +104,6 @@ See [`NOTICE`](NOTICE) and [`docs/LEGAL_NOTES.md`](docs/LEGAL_NOTES.md).
 
 - Python 3.11 or newer.
 - No third-party Python packages are required.
-
-## Quickstart
-
-1. Download `quranic-corpus-morphology-0.4.txt` from the official Corpus download page:
-   <https://corpus.quran.com/download/>
-
-2. Place it at:
-
-   ```text
-   data/quranic-corpus-morphology-0.4.txt
-   ```
-
-3. Build the local database:
-
-   ```bash
-   python -m quran_offline.import_morphology --input data/quranic-corpus-morphology-0.4.txt
-   ```
-
-4. Start the local app:
-
-   ```bash
-   python -m quran_offline.server
-   ```
-
-5. Open:
-
-   ```text
-   http://127.0.0.1:8765/
-   ```
-
-On Windows, `Run Offline Corpus.bat` starts the local server.
 
 ## Build Profiles
 

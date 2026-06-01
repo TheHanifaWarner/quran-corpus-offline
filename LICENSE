@@ -1,13 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Quran Corpus Offline Builder contributors
-
-THIS LICENSE APPLIES ONLY TO THE ORIGINAL SOURCE CODE IN THIS REPOSITORY
-(the Python application, launchers, and audit tooling). It does NOT grant any
-rights over the Quranic Arabic Corpus linguistic data, the Quranic text, any
-translations, or any pages/assets retrieved from corpus.quran.com. Those works
-belong to their respective authors and are governed by their own licenses.
-See NOTICE and docs/LEGAL_NOTES.md.
+Copyright (c) 2026 Quran Corpus Offline Tool contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
