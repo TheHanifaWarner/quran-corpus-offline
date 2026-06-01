@@ -1,6 +1,7 @@
 # Technical Audit Summary
 
-The tooling has been tested against a completed local cache during development. The completed cache is not included in this repository.
+The tooling has been tested against a completed local cache during development.
+The completed cache is not included in this repository.
 
 ## Public Repository Scope
 

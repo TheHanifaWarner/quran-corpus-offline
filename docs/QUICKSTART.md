@@ -28,7 +28,8 @@ This creates:
 data/quran_corpus.sqlite3
 ```
 
-The generated SQLite database is local build output and is not included in this repository.
+The generated SQLite database is local build output and is not included in this
+repository.
 
 ## Start The App
 
@@ -50,7 +51,8 @@ Run Offline Corpus.bat
 
 ## Optional Page Cache
 
-The app works in database mode without a page cache. To build a personal local cache, estimate first:
+The app works in database mode without a page cache. To build a personal local
+cache, estimate first:
 
 ```bash
 python -m quran_offline.cache_corpus_pages --profile core --estimate

@@ -513,10 +513,10 @@ def render_mirror(q: dict[str, list[str]]) -> bytes:
     body = f"""
     <h1>Exact cached Corpus pages</h1>
     <div class="notice"><p>This mode serves the real HTML pages downloaded from corpus.quran.com, rewritten for offline links. Build it once while online, then it works offline.</p>
-    <pre class="code">python -m quran_offline.cache_corpus_pages --mode all</pre></div>
+    <pre class="code">python -m quran_offline.cache_corpus_pages --profile full</pre></div>
     <div class="card"><p>Cached pages found: <b>{n}</b></p>
     <p><a class="pill" href="/cached?url={urllib.parse.quote(sample, safe='')}">Open cached Word by Word 1:1</a></p>
-    <p class="small muted">If a page says “not cached”, run the cache builder with <code>--mode all</code> or <code>--mode verse-pages</code>.</p></div>
+    <p class="small muted">If a page says "not cached", verify the selected cache profile or build a broader cache with <code>--profile full</code>.</p></div>
     """
     return page("Cached Corpus", body)
 
@@ -593,7 +593,7 @@ def render_cached(q: dict[str, list[str]], referer: str | None = None) -> bytes:
         if fallback is not None:
             return fallback
         tried_html = "".join(f"<li class='code'>{esc(u)}</li>" for u in tried)
-        return page("Not cached", f"<h1>Not cached</h1><p>This exact Corpus URL was not found in the local cache.</p><p><b>Requested:</b></p><p class='code'>{esc(normalise_corpus_url(requested_url))}</p><p><b>Also tried aliases:</b></p><ul>{tried_html}</ul><p>Do not run the 150k-page crawl again yet. This is usually a link-routing issue, not missing Quran data.</p>")
+        return page("Not cached", f"<h1>Not cached</h1><p>This exact Corpus URL was not found in the local cache.</p><p><b>Requested:</b></p><p class='code'>{esc(normalise_corpus_url(requested_url))}</p><p><b>Also tried aliases:</b></p><ul>{tried_html}</ul><p>If the page should be available, verify the selected cache profile or run the relevant cache build command.</p>")
     p = ROOT / rel
     if not p.exists():
         return page("Missing cache file", f"<h1>Missing file</h1><p>{esc(str(p))}</p>")
@@ -661,13 +661,13 @@ def render_status() -> bytes:
     if DB_PATH.exists():
         with db() as conn:
             meta = dict(conn.execute("SELECT key,value FROM meta").fetchall())
-            db_stats = f"<p>Database: <b>present</b> — {esc(DB_PATH)}</p><p>Segments: {esc(meta.get('segment_count'))}; Words: {esc(meta.get('word_count'))}; Source: <span class='code'>{esc(meta.get('source_file'))}</span></p>"
+            db_stats = f"<p>Database: <b>present</b> - {esc(DB_PATH)}</p><p>Segments: {esc(meta.get('segment_count'))}; Words: {esc(meta.get('word_count'))}; Source: <span class='code'>{esc(meta.get('source_file'))}</span></p>"
     index = load_json(CACHE_INDEX)
     assets = load_json(ASSET_INDEX)
     body = f"""
     <h1>Status</h1><div class="card">{db_stats}<p>Cached Corpus HTML pages: <b>{len(index)}</b></p><p>Cached image assets: <b>{len(assets)}</b></p></div>
     <div class="card"><h2>Build commands</h2><pre class="code">python -m quran_offline.import_morphology
-python -m quran_offline.cache_corpus_pages --mode all</pre></div>
+python -m quran_offline.cache_corpus_pages --profile full</pre></div>
     <div class="card"><h2>Coverage target</h2><ul><li>DB mode: all morphology-derived features from v0.4.</li><li>Exact page cache mode: Corpus Word by Word, Translation, Grammar, Treebank where present, Dictionary, Lemmas, Verb Concordance, Ontology/docs pages downloaded while online.</li></ul></div>
     """
     return page("Status", body)

@@ -1,6 +1,7 @@
 # Verifying A Local Cache
 
-Use the audit command to verify local build output. The audit reads local files and can start a temporary local server for smoke checks.
+Use the audit command to verify local build output. The audit reads local files
+and can start a temporary local server for smoke checks.
 
 ## Verification Scopes
 

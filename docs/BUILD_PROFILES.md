@@ -1,6 +1,7 @@
 # Build Profiles
 
-The cache builder supports profiles so users can choose the amount of content to cache locally.
+The cache builder supports profiles so users can choose the amount of content
+to cache locally.
 
 ## Profiles
 
@@ -29,7 +30,8 @@ python -m quran_offline.cache_corpus_pages --profile full
 
 ## Resume
 
-The builder skips already-cached pages and assets. If a build stops, run the same command again.
+The builder skips already-cached pages and assets. If a build stops, run the
+same command again.
 
 ## Conservative Defaults
 
