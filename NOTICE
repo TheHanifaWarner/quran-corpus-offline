@@ -1,0 +1,45 @@
+================================================================================
+NOTICE — Attribution and provenance
+Unofficial Offline Quranic Arabic Corpus Tool
+================================================================================
+
+This repository contains an UNOFFICIAL, community-built offline reader/cache tool
+for the Quranic Arabic Corpus. It is NOT produced, endorsed, reviewed, or
+approved by the original Quranic Arabic Corpus project or its maintainers.
+
+All scholarly credit and authority for the Quranic Arabic Corpus belong to the
+original project and its contributors:
+
+  * Quranic Arabic Corpus  —  https://corpus.quran.com
+  * Original author / lead: Kais Dukes
+  * Created at: the Language Research Group, University of Leeds
+  * Academic reference:
+      Dukes, K., Atwell, E., & Habash, N. (2013). Supervised Collaboration for
+      Syntactic Annotation of Quranic Arabic. Language Resources & Evaluation.
+      Dukes, K., & Habash, N. (2010). Morphological Annotation of Quranic Arabic.
+      LREC 2010.
+  * Current website hosting/maintenance is associated with the quran.com
+    community/maintainers (verify current status at corpus.quran.com).
+
+Underlying data and content (NOT owned by this repository):
+
+  * Quranic Arabic morphology / annotation data — © the Quranic Arabic Corpus
+    project; distributed by the project under the GNU General Public License.
+    (Obtain the official file from https://corpus.quran.com/download/.)
+  * Quranic Arabic text — sourced from the Tanzil Project (https://tanzil.net),
+    under the Tanzil terms / Creative Commons Attribution-NoDerivs.
+  * English translations shown on corpus.quran.com (e.g. Sahih International,
+    Pickthall, Yusuf Ali, and others) — copyright their respective translators
+    and publishers. These are THIRD-PARTY works and are NOT redistributed by
+    this repository.
+  * Page HTML, CSS, JavaScript, images, treebank graphics, and ontology content
+    on corpus.quran.com — © the Quranic Arabic Corpus project.
+
+This repository ships ONLY original source code (MIT, see LICENSE) plus a small
+attributed sample of the morphology format for testing. It does NOT ship the
+offline page cache, the full morphology database, or any third-party
+translations. Each user builds their own local cache from the official source.
+
+If you are a rights holder and have any concern about this project, please open
+an issue; see the takedown/transfer note in ATTRIBUTION_AND_LICENSE_NOTES.md.
+================================================================================

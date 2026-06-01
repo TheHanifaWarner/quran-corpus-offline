@@ -1,0 +1,9 @@
+# This project uses the Python standard library only — there are NO third-party dependencies.
+# Requirements:
+#   - Python 3.11 or newer
+#
+# Standard-library modules used: http.server, sqlite3, urllib, json, hashlib, re,
+# html, html.parser, pathlib, argparse, difflib, collections, socket, webbrowser.
+#
+# Nothing to install. Run directly:
+#   python -m quran_offline.server

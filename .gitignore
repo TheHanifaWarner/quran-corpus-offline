@@ -1,0 +1,55 @@
+# ---- Quran Corpus Offline (public repo) .gitignore ----
+# Keep the repo to ORIGINAL CODE + PUBLIC DOCS only.
+# Never commit the offline cache, databases, backups, snapshots, logs, or archives.
+
+# Offline page/asset cache (huge; third-party content — do NOT publish without permission)
+cache/
+cache/pages/
+cache/assets/
+cache/index.json
+cache/assets.json
+
+# Databases and generated data
+data/*.sqlite3
+data/*.sqlite3-shm
+data/*.sqlite3-wal
+data/*.db
+# The full official morphology file is downloaded by the user, not shipped here.
+data/quranic-corpus-morphology-0.4.txt
+
+# Backups / temp / logs
+*.bak
+*.bak-*
+*.tmp
+*.log
+
+# Audit run artifacts (contain local machine paths / generated results)
+quran_offline/audit_tools/snapshots/
+quran_offline/audit_tools/online_compare_results.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+
+# Release archives (published as GitHub Release assets, never committed)
+*.zip
+*.7z
+*.rar
+release/
+dist/
+build/
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Do NOT ignore source code or public docs:
+!quran_offline/**/*.py
+!docs/**/*.md
+!*.md
+!data/sample-morphology.txt
