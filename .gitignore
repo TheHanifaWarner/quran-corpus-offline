@@ -2,7 +2,7 @@
 # Keep the repo to ORIGINAL CODE + PUBLIC DOCS only.
 # Never commit the offline cache, databases, backups, snapshots, logs, or archives.
 
-# Offline page/asset cache (huge; third-party content — do NOT publish without permission)
+# Offline page/asset cache (huge; third-party content - do NOT publish without permission)
 cache/
 cache/pages/
 cache/assets/
@@ -25,7 +25,6 @@ data/quranic-corpus-morphology-0.4.txt
 
 # Audit run artifacts (contain local machine paths / generated results)
 quran_offline/audit_tools/snapshots/
-quran_offline/audit_tools/online_compare_results.json
 
 # Python
 __pycache__/

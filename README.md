@@ -2,7 +2,7 @@
 
 This is an unofficial Python tool for studying Quranic Arabic Corpus material on a local computer. It can build a local SQLite morphology database and, optionally, a personal offline cache of selected pages from the Quranic Arabic Corpus website.
 
-This project is not produced, endorsed, reviewed, or approved by the Quranic Arabic Corpus project, Kais Dukes, the University of Leeds, quran.com, or any associated maintainers.
+This project is not produced, endorsed, reviewed, or approved by the Quranic Arabic Corpus project, the University of Leeds, quran.com, or any associated maintainers.
 
 ## What It Does
 
@@ -92,7 +92,7 @@ On Windows, `Run Offline Corpus.bat` starts the local server after Python is ins
 Credit for the Quranic Arabic Corpus belongs to the original project and contributors:
 
 - Quranic Arabic Corpus: <https://corpus.quran.com>
-- Kais Dukes and Corpus contributors
+- Quranic Arabic Corpus contributors
 - Language Research Group, University of Leeds
 - Tanzil Project for Quranic text provenance
 - Translation and annotation rights holders shown by the Corpus website

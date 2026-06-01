@@ -370,12 +370,12 @@ def classify_local_ref(ref: str, index: dict[str, str], assets: dict[str, str]) 
     parsed = urllib.parse.urlparse(ref)
     path = parsed.path or "/"
     query = urllib.parse.parse_qs(parsed.query)
-    internal_routes = {"/", "/search", "/dictionary", "/lemmas", "/mirror", "/status", "/graphimage"}
+    local_routes = {"/", "/search", "/dictionary", "/lemmas", "/mirror", "/status", "/graphimage"}
     asset_exts = {".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico"}
     dynamic_asset_paths = {"/wordimage"}
     ext = Path(path).suffix.lower()
 
-    if path in internal_routes:
+    if path in local_routes:
         return "ok", None
     if path == "/asset":
         url = normalise_corpus_url(query.get("url", [""])[0])

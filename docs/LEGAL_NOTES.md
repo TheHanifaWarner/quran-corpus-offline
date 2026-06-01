@@ -21,7 +21,7 @@ Redistribution of cached website pages, translations, images, or other third-par
 
 ## Unofficial Status
 
-This project is not produced, endorsed, reviewed, or approved by the Quranic Arabic Corpus project, Kais Dukes, the University of Leeds, quran.com, or any associated maintainers.
+This project is not produced, endorsed, reviewed, or approved by the Quranic Arabic Corpus project, the University of Leeds, quran.com, or any associated maintainers.
 
 ## Rights Holder Concerns
 
