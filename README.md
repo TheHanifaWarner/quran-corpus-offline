@@ -1,264 +1,151 @@
 # Unofficial Offline Quranic Arabic Corpus Tool
 
-> **Unofficial & not endorsed.** This is a community-built, offline study tool that
-> mirrors the *Quranic Arabic Corpus* experience locally. It is **not** produced,
-> endorsed, reviewed, or approved by the original Quranic Arabic Corpus project,
-> Kais Dukes, the University of Leeds Language Research Group, or the quran.com
-> maintainers — unless they explicitly say otherwise. All scholarly credit and
-> authority belong to the original project (see [Attribution](#attribution--provenance)).
+This is an unofficial Python tool for studying Quranic Arabic Corpus material on a local computer. It can build a local SQLite morphology database and, optionally, a personal offline cache of selected pages from the Quranic Arabic Corpus website.
 
-A local Python web app that lets you study the Holy Quran word-by-word — morphology,
-roots, lemmas, grammar, treebank, dictionary, and ontology concepts — **completely
-offline**, after a one-time local setup. It reproduces the original Corpus study
-pages either from morphology data (database mode) or from pages you cache yourself
-(exact-cache mode).
+This project is not produced, endorsed, reviewed, or approved by the Quranic Arabic Corpus project, Kais Dukes, the University of Leeds, quran.com, or any associated maintainers.
 
----
+## What It Does
 
-## What this is
+- Imports the Quranic Arabic Corpus morphology file into SQLite.
+- Runs a local web app at `http://127.0.0.1:8765/`.
+- Provides an offline morphology reader, root dictionary, lemma frequency view, and morphology search from the local database.
+- Optionally builds a local cache of Corpus pages for personal offline study.
+- Includes audit commands to estimate, resume, and verify a local cache.
 
-- An **offline reader** for Quranic Arabic morphology built on the official
-  Quranic Arabic Corpus v0.4 morphology data (which **you** download from the
-  official site).
-- A **local web server** (`python -m quran_offline.server`) that serves a
-  word-by-word reader, morphological search, root dictionary, and lemma frequency
-  generated from that data — no internet required once set up.
-- An optional **personal offline cache builder** that, while you are online once,
-  saves real Corpus study pages to your own machine so you can browse them later
-  offline. The cache is rewritten at serve time so it never calls the internet.
-- A set of **read-only audit tools** that verify the offline archive's health and
-  fidelity.
+## What It Does Not Include
 
-## What this is **not**
+- No prebuilt page cache.
+- No cached Corpus website pages.
+- No SQLite database.
+- No full morphology file.
+- No third-party translations, images, or website content.
 
-- ❌ Not the official Quranic Arabic Corpus, and not affiliated with it.
-- ❌ Not a redistribution of the Corpus website, its translations, or its content.
-  This repository ships **only original code** — no cached pages, no database,
-  no third-party translations.
-- ❌ Not a claim of ownership or authority over any Quranic text, translation,
-  morphology data, or Corpus content. Those belong to their original authors.
-- ❌ Not a hosted service — it runs only on your own computer at `127.0.0.1`.
+Prebuilt cache archives are not included in this repository. This project provides tooling for users to build a local cache from the official Quranic Arabic Corpus website for personal offline study. Redistribution of cached website pages, translations, images, or other third-party content may require additional permission from the relevant rights holders. This repository does not grant rights to redistribute third-party content.
 
----
+## Attribution
 
-## Attribution & provenance
+Credit for the Quranic Arabic Corpus belongs to the original project and contributors:
 
-This tool exists only because of the original work of others. Full credit to:
+- Quranic Arabic Corpus: <https://corpus.quran.com>
+- Kais Dukes and Corpus contributors
+- Language Research Group, University of Leeds
+- Tanzil Project for Quranic text provenance
+- Translation and annotation rights holders shown by the Corpus website
+- quran.com maintainers where relevant to current hosting
 
-- **Quranic Arabic Corpus** — <https://corpus.quran.com>
-- **Kais Dukes** — original author/creator
-- **Language Research Group, University of Leeds** — where the Corpus was created
-- **quran.com maintainers/community** — associated with current hosting
-- **Tanzil Project** (<https://tanzil.net>) — source of the Quranic Arabic text
-- **Translators & contributors** — for the English translations and annotations
-  shown on the Corpus site (each under their own copyright)
-
-The Quranic linguistic data and all Corpus content belong to the original project
-and contributors. See [`NOTICE`](NOTICE) and
-[`ATTRIBUTION_AND_LICENSE_NOTES.md`](ATTRIBUTION_AND_LICENSE_NOTES.md) for details.
-
----
+See [`NOTICE`](NOTICE) and [`docs/LEGAL_NOTES.md`](docs/LEGAL_NOTES.md).
 
 ## Requirements
 
-- Python **3.11+** (standard library only — **no third-party packages**, see
-  [`requirements.txt`](requirements.txt)).
-- Windows, macOS, or Linux.
+- Python 3.11 or newer.
+- No third-party Python packages are required.
 
----
+## Quickstart
 
-## How to run locally
+1. Download `quranic-corpus-morphology-0.4.txt` from the official Corpus download page:
+   <https://corpus.quran.com/download/>
 
-1. **Get the official morphology data** (one-time):
-   Download `quranic-corpus-morphology-0.4.txt` from the official download page:
-   <https://corpus.quran.com/download/> and place it in `data/`.
-   *(Please read and follow the licensing terms on that page.)*
+2. Place it at:
 
-2. **Build the local database:**
+   ```text
+   data/quranic-corpus-morphology-0.4.txt
+   ```
+
+3. Build the local database:
+
    ```bash
    python -m quran_offline.import_morphology --input data/quranic-corpus-morphology-0.4.txt
    ```
 
-3. **Start the offline app:**
+4. Start the local app:
+
    ```bash
    python -m quran_offline.server
    ```
-   Then open <http://127.0.0.1:8765/> in your browser.
 
-**Windows users** can instead double-click `Run Offline Corpus.bat`.
+5. Open:
 
-Even with only the steps above (no page cache), you get a full offline word-by-word
-reader, morphological search, root dictionary, and lemma frequency — all generated
-from the morphology data.
+   ```text
+   http://127.0.0.1:8765/
+   ```
 
----
+On Windows, `Run Offline Corpus.bat` starts the local server.
 
-## How to build/cache pages locally (optional, advanced)
+## Build Profiles
 
-> **This repository does not include the ~2.3 GB cache.** You build your own,
-> locally, from the official source. The builder is **resumable, parallel, and
-> respectful** so you don't need to leave your PC on for days.
+Use `--profile` for cache builds:
 
-### Build profiles (recommended)
-
-Pick how much to cache with `--profile`:
-
-| Profile | What it caches | Approx pages |
+| Profile | Purpose | Network use |
 | --- | --- | --- |
-| `db-only` | Just the SQLite morphology DB (no page cache) | 0 |
-| `core` | Word-by-word + translation for all 6,236 verses + root dictionary | ~14k |
-| `morphology` | All word-morphology pages | ~77k |
-| `full` | Near-1:1 mirror (everything + crawl) | ~150k pages + ~78k assets |
+| `db-only` | Build only the SQLite morphology database. | None after the morphology file is available locally. |
+| `core` | Cache verse word-by-word pages, translations, and root dictionary pages. | Moderate. |
+| `morphology` | Cache word morphology pages. | Larger. |
+| `full` | Build the broadest local cache using deterministic URLs and crawling. | Largest. |
 
-**Always estimate first** (downloads nothing):
+Estimate first. These commands do not download pages:
 
 ```bash
 python -m quran_offline.cache_corpus_pages --profile core --estimate
+python -m quran_offline.cache_corpus_pages --profile full --estimate
 ```
 
-Then build. **Start small** (`db-only` → `core`) before attempting `full`:
+Then run a build:
 
 ```bash
-# 1) Build the database first (needed for core/morphology/full URL lists)
 python -m quran_offline.cache_corpus_pages --profile db-only
-
-# 2) Cache the most useful pages
 python -m quran_offline.cache_corpus_pages --profile core
-
-# 3) (optional) all morphology pages, or the full mirror
 python -m quran_offline.cache_corpus_pages --profile morphology
 python -m quran_offline.cache_corpus_pages --profile full
 ```
 
-The legacy commands still work: `--mode start|verse-pages|dictionary|all`
-(`--mode all` ≈ `--profile full`). On Windows you can double-click
-`BUILD-FULL-OFFLINE-CACHE.bat`. Browse results at <http://127.0.0.1:8765/mirror>.
+The builder is resumable. Re-run the same command after interruption; existing files are skipped.
 
-### Resume instead of restarting
+## Download Behaviour
 
-The builder is **checkpointed**. If it stops (Ctrl-C, network drop, reboot),
-just **re-run the exact same command** — already-cached pages are skipped and it
-continues where it left off. Nothing is re-downloaded and the index is written
-atomically, so an interrupted build never corrupts your cache.
+The default cache builder settings are conservative:
 
-### Safe speed settings (be kind to corpus.quran.com)
+- `--workers 4`
+- `--rate-limit 2`
+- retry and backoff for transient failures
+- resumable indexes
 
-**The default is intentionally conservative: 4 workers but a global cap of just
-2 requests/second**, with automatic retry/backoff and an adaptive slow-down if the
-site returns 429/403/5xx. This default is chosen so the tool never encourages
-hammering a third-party site — please leave it as-is unless you have a good reason.
+Faster settings are opt-in:
 
 ```bash
-# default (respectful: ~2 req/s) — recommended
-python -m quran_offline.cache_corpus_pages --profile full
-
-# faster, advanced opt-in (only if you know the site tolerates it)
 python -m quran_offline.cache_corpus_pages --profile full --workers 4 --rate-limit 6
 ```
 
-Options: `--workers N`, `--rate-limit R` (req/s), `--delay S`, `--timeout S`,
-`--max-retries N`, `--max-pages N` (approximate cap for testing),
-`--no-assets`, `--no-crawl`, `--estimate`/`--dry-run`.
+Use faster settings responsibly. The source website is a third-party service.
 
-> ⚠️ **Be respectful and lawful.** This downloads many pages from a third-party
-> site. Build once, keep your cache, and use it **for personal use only**. **Do not
-> run aggressive settings repeatedly** against corpus.quran.com — a single gentle
-> build is the right approach. Caching is not redistribution: the cached content
-> (including third-party translations and Corpus page markup) belongs to its owners.
-> Do **not** re-publish your cache without permission from the rights holders.
->
-> **Timing — and why `--estimate` and real builds differ.** `--estimate` is a
-> *planning* figure computed from the targets known **at that moment** (for `full`,
-> mostly the deterministic seeds + known assets). A real `full` build also **crawls
-> and discovers additional Corpus pages/assets as it goes**, so the live run does
-> more work than the up-front estimate suggests. For example, `--profile full
-> --estimate` may report ~14 hours at the default 2 req/s, while a real full build is
-> better modelled at **~31 hours**. Real-world time also varies with **link discovery,
-> retries, the site's speed, your network, the number of assets, and polite pauses**.
->
-> Treat **`full` at the conservative default as roughly "overnight to 1–2 days"** —
-> it is meant to run gently in the background and resumes if interrupted. Advanced
-> users who want it faster can explicitly opt in with **`--workers 4 --rate-limit 6`**
-> (~10–11 hours by the current estimate), but should **avoid repeatedly hammering the
-> site**. Most users only need `core` (minutes to ~2 h) or `morphology`, not `full`.
-
-### Verify completion
+## Verify A Local Cache
 
 ```bash
-python -m quran_offline.audit_offline_archive --verify db-only     # DB only
-python -m quran_offline.audit_offline_archive --verify core        # core pages
-python -m quran_offline.audit_offline_archive --verify morphology  # morphology pages
-python -m quran_offline.audit_offline_archive                      # full audit (default)
+python -m quran_offline.audit_offline_archive --verify db-only
+python -m quran_offline.audit_offline_archive --verify core
+python -m quran_offline.audit_offline_archive --verify morphology
+python -m quran_offline.audit_offline_archive --verify full
 ```
 
-Each build also writes a `cache/build-report-YYYYMMDD-HHMMSS.md` summarising what
-was saved, skipped, retried, and any failures (re-run to retry just the failures).
+See [`docs/VERIFYING_A_CACHE.md`](docs/VERIFYING_A_CACHE.md).
 
----
+## Limitations
 
-## How to use a future full-cache release ZIP (if one is ever provided)
+- Database mode depends only on morphology data and does not reproduce every website page.
+- Exact cached-page mode requires each user to build a local cache.
+- Some website features are dynamic, account-based, or intentionally excluded.
+- Cache completeness depends on the selected profile and successful access to the source website.
 
-A pre-built cache is **not** distributed in this repository, and may never be,
-because it contains third-party content (see licensing notes). *If* an official or
-permission-cleared cache archive is ever published as a GitHub Release asset:
+## License And Provenance
 
-1. Download the release ZIP (or the split parts `*.zip.001`, `*.zip.002`, …).
-2. If split, rejoin them, e.g.:
-   - Windows (PowerShell): `cmd /c copy /b cache.zip.001+cache.zip.002+... cache.zip`
-   - macOS/Linux: `cat cache.zip.* > cache.zip`
-3. Verify the checksum published in the release notes.
-4. Extract so that `cache/pages/`, `cache/assets/`, `cache/index.json`, and
-   `cache/assets.json` sit next to `quran_offline/`.
-5. Start the server normally; cached pages will be served offline.
+- This repository's original source code is licensed under MIT. See [`LICENSE`](LICENSE).
+- Quranic Arabic Corpus data and website content belong to their original rights holders.
+- The full morphology file and cached pages are not distributed here.
+- This repository does not grant rights to redistribute third-party content.
 
----
+More detail:
 
-## Licensing / provenance (summary)
-
-- **This repository's source code:** MIT (see [`LICENSE`](LICENSE)).
-- **Quranic Arabic Corpus morphology/annotation data:** © the Corpus project;
-  distributed by the project under the **GNU GPL** — obtain it yourself from the
-  official site.
-- **Quranic Arabic text:** Tanzil Project (CC BY-ND / Tanzil terms).
-- **English translations & Corpus page content:** © their respective owners;
-  **not** included or redistributed here.
-
-Full detail and open questions are in
-[`ATTRIBUTION_AND_LICENSE_NOTES.md`](ATTRIBUTION_AND_LICENSE_NOTES.md).
-
----
-
-## Known limitations
-
-- The morphology file does not contain every visible gloss/translation/treebank
-  text shown on the website; those require the optional local page cache.
-- A small number of pages on the live site are dynamic/account-only
-  (sign-in, message board, feedback) and are intentionally not cached.
-- The bundled `data/sample-morphology.txt` is a tiny 7-line excerpt for testing
-  only; it is not the full dataset.
-- This is a personal/educational tool, provided "as is" with no warranty.
-
----
-
-## Audit status summary
-
-The offline archive used to develop this tool was independently audited
-(read-only) and classified as a **near-1:1 functional offline mirror** of the live
-site, with all **77,429** word-morphology locations available as original cached
-HTML. Audit reports are in [`docs/`](docs/):
-
-- `docs/OFFLINE_AUDIT.md` — baseline archive audit
-- `docs/FINAL_1TO1_QURAN_CORPUS_AUDIT.md` — full 1:1 comparison vs the live site
-- `docs/PERFECT_MORPHOLOGY_CACHE_FIX_REPORT.md` — completing the last 5 pages
-
-> Note: those audits describe a *local* archive on the author's machine. The
-> archive itself (cache + database) is **not** part of this repository.
-
----
-
-## Contact / takedown
-
-If you are a rights holder for any content referenced by this tool and have a
-concern, please open an issue. See the takedown/transfer note in
-[`ATTRIBUTION_AND_LICENSE_NOTES.md`](ATTRIBUTION_AND_LICENSE_NOTES.md). The intent
-of this project is to defer entirely to the original Quranic Arabic Corpus project.
+- [`docs/QUICKSTART.md`](docs/QUICKSTART.md)
+- [`docs/BUILD_PROFILES.md`](docs/BUILD_PROFILES.md)
+- [`docs/VERIFYING_A_CACHE.md`](docs/VERIFYING_A_CACHE.md)
+- [`docs/LEGAL_NOTES.md`](docs/LEGAL_NOTES.md)
+- [`docs/TECHNICAL_AUDIT_SUMMARY.md`](docs/TECHNICAL_AUDIT_SUMMARY.md)
